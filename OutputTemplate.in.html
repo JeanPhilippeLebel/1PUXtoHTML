@@ -54,6 +54,8 @@
                 {% else %}
                   <td style="width: 100%;" colspan="2"><img src="data:image/{{ otherfields[3] }};base64, {{ otherfields[2] }}" width="50%"></td>
                 {% endif %} 
+              {% elif otherfields[1] == 'sshKey' %}
+                <td style="width: 100%; word-wrap: anywhere;" colspan="2">{{ otherfields[0] }} : {{ otherfields[2] | replace("\n", "<br/>") }}</td>
               {% else %}
                 <td style="width: 100%;" colspan="2">{{ otherfields[0] }} : {{ otherfields[2] | replace("\n", "<br/>") }}</td>
               {% endif %}

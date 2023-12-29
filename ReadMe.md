@@ -17,7 +17,7 @@ This is a simple Python script to convert a 1Password export file (.1pux) to a p
 
 # Licence and inspiration
 
-This tool is a mashup of these two script:
+This tool is a mashup of these two scripts:
 
 https://github.com/ShayBox/OnePasswordConverter
 https://github.com/TechJosh/1PUXtoChromeCSV/blob/main/1PUXtoChromeCSV.py

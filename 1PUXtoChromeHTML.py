@@ -22,7 +22,7 @@ class line:
         return 'name:%s, url:%s, username:%s, password:%s, note:%s' % (self.name, self.url, self.username, self.password, self.note)
 
 def readFile(ifile, verbose):
-    with ZipFile(ifile) as file:
+    with ZipFile(ifile.strip()) as file:
         #load all the "files"
         filelist = {}
         for filename in file.namelist():
@@ -132,6 +132,8 @@ def readJSON(file_data: str, filelist, verbose):
                             otherfields.append((field["title"],"phone", value["phone"]))
                         elif "url" in value:
                             otherfields.append((field["title"],"url", value["url"]))
+                        elif "sshKey" in value:
+                            otherfields.append((field["title"],"sshKey", value["sshKey"]))
                         else: 
                             otherfields.append((field["title"],"string", value["string"]))
 
@@ -169,7 +171,7 @@ def main(argv):
 
     try:
         acount = len(argv)
-        if acount < 4:
+        if acount < 2:
             raise getopt.GetoptError("invalid arguments")
         opts, args = getopt.getopt(argv, "i:o:v", ["ifile", "ofile", "verbose"])
     except getopt.GetoptError:
