@@ -1,0 +1,69 @@
+{# templates/results.html #}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>1Password export</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      table-layout: fixed;
+      width: 300px;
+      page-break-inside: avoid;
+    }
+
+    table td tr th {
+      border: solid 1px #886;
+      width: 120px;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+
+<body>
+  {% for key, value in items.items() %}
+    <h1>{{ key }}</h1>
+    {% for item in value %}
+      <table style="width: 100%;" border="1">
+        <tbody>
+          <tr>
+            <td style="width: 100%;" colspan="2"><strong>{{ item.name }}</strong></td>
+          </tr>
+          <tr>
+            <td style="width: 50%;">Username: {{ item.username }}</td>
+            <td style="width: 50%;">Password: {{ item.password }}</td>
+          </tr>
+          <tr>
+            <td style="width: 100%;" colspan="2">{{ item.url }}</td>
+          </tr>
+          {% if item.note %}
+            <tr>
+              <td style="width: 100%;" colspan="2">{{ item.note | replace("\n", "<br/>") }}</td>
+            </tr>
+          {% endif %}
+
+          {% for otherfields in item.otherfields %}
+            <tr>
+              {% if otherfields[1] == 'file' %}
+                {% if otherfields[3] == 'pdf' %}
+                  <object data="data:application/pdf;base64, {{ otherfields[2] }}" type="application/pdf" width="100%" height="600px">
+                      <p>It appears you don't have a PDF plugin for this browser</a></p>
+                  </object>                  
+                {% else %}
+                  <td style="width: 100%;" colspan="2"><img src="data:image/{{ otherfields[3] }};base64, {{ otherfields[2] }}" width="50%"></td>
+                {% endif %} 
+              {% else %}
+                <td style="width: 100%;" colspan="2">{{ otherfields[0] }} : {{ otherfields[2] | replace("\n", "<br/>") }}</td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% endfor %}
+    <br>
+  {% endfor %}
+</body>
+
+</html>
